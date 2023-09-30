@@ -17,10 +17,6 @@ class FileController extends Controller
     {
         $file = $request->file('uploaded_file'); // Assuming you have an input named 'uploaded_file' in your form
 
-        Log::info($request);
-
-
-
         if ($file && $file->isValid()) {
             $filename = $file->getClientOriginalName();
             $contents = file_get_contents($file->getRealPath());
