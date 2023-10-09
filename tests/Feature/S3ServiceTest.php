@@ -10,7 +10,7 @@ use Tests\TestCase;
 class S3ServiceTest extends TestCase
 {
     protected S3Service $s3Service;
-    
+
     public function setUp(): void
     {
         parent::setUp();
@@ -44,7 +44,7 @@ class S3ServiceTest extends TestCase
         $file = UploadedFile::fake()->image($filename = 'logo.png');
         $contents = file_get_contents($file->getRealPath());
         $this->assertFalse($this->s3Service->fileExists($filename));
-        Storage::disk('s3')->put($filename, 'Test Content');
+        Storage::disk('s3')->put($filename, $contents);
         $this->assertTrue($this->s3Service->fileExists($filename));
     }
 
@@ -53,7 +53,7 @@ class S3ServiceTest extends TestCase
     {
         $file = UploadedFile::fake()->image($filename = 'logo.png');
         $contents = file_get_contents($file->getRealPath());
-        Storage::disk('s3')->put($filename, 'Test Content');
+        Storage::disk('s3')->put($filename, $contents);
         $this->s3Service->deleteFile($filename);
         Storage::disk('s3')->assertMissing($filename);
     }
